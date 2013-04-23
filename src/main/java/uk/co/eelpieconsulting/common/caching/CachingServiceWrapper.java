@@ -24,25 +24,25 @@ public class CachingServiceWrapper <T, U> {
 
 		final U cachedResult = (U) cache.get(cacheKey);
 		if (cachedResult != null) {
-			log.info("Cache hit for: " + cacheKey);
+			log.debug("Cache hit for: " + cacheKey);
 			return cachedResult;
 		}
 		
-		log.info("Cache miss for '" + cacheKey + "' - checking for negative cache hit");
+		log.debug("Cache miss for '" + cacheKey + "' - checking for negative cache hit");
 		if (isNegativeCacheHit(cacheKey)) {
-			log.info("Negative cache hit for '" + cacheKey + "'; returning null");
+			log.debug("Negative cache hit for '" + cacheKey + "'; returning null");
 			return null;
 		}
 		
-		log.info("Cache miss for '" + cacheKey + "' - delegating to real service");
+		log.debug("Cache miss for '" + cacheKey + "' - delegating to real service");
 		final U result = service.callService(parameter);
 		if (result != null) {
-			log.info("Caching result for :" + cacheKey);
+			log.debug("Caching result for :" + cacheKey);
 			cache.put(cacheKey, service.getTTL(), result);
 			return result;
 		}
 		
-		log.info("Live service call failed; returning adding negative cache and returning null");
+		log.warn("Live service call failed; returning adding negative cache and returning null");
 		setNegativeCacheHit(cacheKey);
 		return null;
 	}
