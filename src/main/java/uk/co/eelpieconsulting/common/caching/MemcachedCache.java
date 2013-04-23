@@ -16,9 +16,13 @@ public class MemcachedCache {
 	
 	private MemcachedClient memcachedClient;
 
-    @Value("#{config['memcached.urls']}")
+	@Value("#{config['memcached.urls']}")
 	private String memcachedUrls;
-    
+	
+	public void setMemcachedUrls(String memcachedUrls) {
+		this.memcachedUrls = memcachedUrls;
+	}
+
 	public void put(String key, int ttl, Object value) {
 		try {
 			memcachedClient = getClient();

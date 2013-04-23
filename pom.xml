@@ -5,7 +5,7 @@
 	<artifactId>common-caching</artifactId>
 	<packaging>jar</packaging>
 	<name>common-caching</name>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<description>Common functions for wrapping service calls in a cache</description>
 
     <properties>
