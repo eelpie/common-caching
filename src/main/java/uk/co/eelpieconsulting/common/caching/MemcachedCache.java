@@ -5,59 +5,24 @@ import java.io.IOException;
 import net.spy.memcached.AddrUtil;
 import net.spy.memcached.MemcachedClient;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-@Component
 public class MemcachedCache {
+		
+	private final MemcachedClient memcachedClient;
 	
-	private static Logger log = Logger.getLogger(MemcachedCache.class);
-	
-	private MemcachedClient memcachedClient;
-
-	@Value("#{config['memcached.urls']}")
-	private String memcachedUrls;
-	
-	public void setMemcachedUrls(String memcachedUrls) {
-		this.memcachedUrls = memcachedUrls;
+	public MemcachedCache(String memcachedUrls) throws IOException {
+		this.memcachedClient= new MemcachedClient(AddrUtil.getAddresses(memcachedUrls));		
 	}
 
 	public void put(String key, int ttl, Object value) {
-		try {
-			memcachedClient = getClient();
-			memcachedClient.set(key, ttl, value);
-			
-		} catch (IOException e) {
-			log.error("Failed to put to cache: " + e.getMessage());
-		}		
+		memcachedClient.set(key, ttl, value);			
 	}
 
 	public Object get(String key) {
-		MemcachedClient memcachedClient;
-		try {
-			memcachedClient = getClient();
-			return memcachedClient.get(key);
-		} catch (IOException e) {
-			log.error("Failed to get from cache: " + e.getMessage());
-		}
-		return null;
+		return memcachedClient.get(key);		
 	}
 	
 	public void decache(String key) {
-		try {
-			memcachedClient = getClient();
-			memcachedClient.delete(key);
-		} catch (IOException e) {
-			log.error("Failed to decache from cache: " + e.getMessage());
-		}		
-	}
-	
-	private MemcachedClient getClient() throws IOException {
-		if (memcachedClient == null) {
-			memcachedClient= new MemcachedClient( AddrUtil.getAddresses(memcachedUrls));
-		}
-		return memcachedClient;
+		memcachedClient.delete(key);			
 	}
 	
 }

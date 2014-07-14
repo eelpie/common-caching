@@ -1,20 +1,17 @@
 package uk.co.eelpieconsulting.common.caching;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class CachingServiceWrapper <T, U> {
 
-	private static Logger log = Logger.getLogger(CachingServiceWrapper.class);
+	private final static Logger log = Logger.getLogger(CachingServiceWrapper.class);
 	
 	private static final String NEGATIVE = "negative";
 	
 	private CachableService<T, U> service;
 	private MemcachedCache cache;
 	
-	@Autowired
 	public CachingServiceWrapper(CachableService<T, U> service, MemcachedCache cache) {
-		super();
 		this.service = service;
 		this.cache = cache;
 	}
