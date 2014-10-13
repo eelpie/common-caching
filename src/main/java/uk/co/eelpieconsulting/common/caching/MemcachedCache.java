@@ -10,7 +10,7 @@ public class MemcachedCache {
 	private final MemcachedClient memcachedClient;
 	
 	public MemcachedCache(String memcachedUrls) throws IOException {
-		this.memcachedClient= new MemcachedClient(AddrUtil.getAddresses(memcachedUrls));		
+		this.memcachedClient= new MemcachedClient(AddrUtil.getAddresses(memcachedUrls));	// TODO this locks in stale DNS resolutions for the memcache hostnames		
 	}
 
 	public void put(String key, int ttl, Object value) {
