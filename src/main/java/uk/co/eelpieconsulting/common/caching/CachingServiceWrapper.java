@@ -9,9 +9,9 @@ public class CachingServiceWrapper <T, U> {
 	private static final String NEGATIVE = "negative";
 	
 	private CachableService<T, U> service;
-	private MemcachedCache cache;
+	private Cache cache;
 	
-	public CachingServiceWrapper(CachableService<T, U> service, MemcachedCache cache) {
+	public CachingServiceWrapper(CachableService<T, U> service, Cache cache) {
 		this.service = service;
 		this.cache = cache;
 	}
