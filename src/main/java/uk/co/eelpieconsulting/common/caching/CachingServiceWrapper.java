@@ -1,10 +1,11 @@
 package uk.co.eelpieconsulting.common.caching;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CachingServiceWrapper <T, U> {
 
-	private final static Logger log = Logger.getLogger(CachingServiceWrapper.class);
+	private final static Logger log = LogManager.getLogger(CachingServiceWrapper.class);
 	
 	private static final String NEGATIVE = "negative";
 	
